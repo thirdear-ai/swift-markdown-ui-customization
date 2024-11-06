@@ -29,10 +29,10 @@ struct LatexView: View {
     }
     
     var body: some View {
-        ScrollView {
+        ScrollView(.horizontal, showsIndicators: true) {
             if let image = cacheImage {
                 Image(uiImage: image).renderingMode(.template)
-            } else {
+             } else {
                 Text(AttributedString(content, attributes: attributes))
                     .hidden()
             }

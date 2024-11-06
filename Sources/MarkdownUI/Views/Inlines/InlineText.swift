@@ -32,28 +32,30 @@ struct InlineText: View {
     }
     
     var body: some View {
-        let items = separateLatexFormulaBlock
-        ForEach(0..<items.count, id: \.self) { index in
-            let nodeType = items[index]
-            switch nodeType {
-            case .latexBlock(let content):
-                LatexView(content: content)
-            case .other(let inlines):
-                TextStyleAttributesReader { attributes in
-                    inlines.renderText(
-                        baseURL: self.baseURL,
-                        textStyles: .init(
-                            code: self.theme.code,
-                            emphasis: self.theme.emphasis,
-                            strong: self.theme.strong,
-                            strikethrough: self.theme.strikethrough,
-                            link: self.theme.link
-                        ),
-                        images: self.inlineImages,
-                        latexImages: self.latexImages,
-                        softBreakMode: self.softBreakMode,
-                        attributes: attributes
-                    )
+        VStack(spacing: 0) {
+            let items = separateLatexFormulaBlock
+            ForEach(0..<items.count, id: \.self) { index in
+                let nodeType = items[index]
+                switch nodeType {
+                case .latexBlock(let content):
+                    LatexView(content: content)
+                case .other(let inlines):
+                    TextStyleAttributesReader { attributes in
+                        inlines.renderText(
+                            baseURL: self.baseURL,
+                            textStyles: .init(
+                                code: self.theme.code,
+                                emphasis: self.theme.emphasis,
+                                strong: self.theme.strong,
+                                strikethrough: self.theme.strikethrough,
+                                link: self.theme.link
+                            ),
+                            images: self.inlineImages,
+                            latexImages: self.latexImages,
+                            softBreakMode: self.softBreakMode,
+                            attributes: attributes
+                        )
+                    }
                 }
             }
         }

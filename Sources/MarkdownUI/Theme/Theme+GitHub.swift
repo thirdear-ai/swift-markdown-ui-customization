@@ -16,7 +16,7 @@ extension Theme {
   /// Table | ![](GitHubTable)
   public static let gitHub = Theme()
     .text {
-      ForegroundColor(.text)
+        ForegroundColor(.red)
       BackgroundColor(.background)
       FontSize(16)
     }

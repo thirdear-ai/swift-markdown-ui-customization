@@ -11,6 +11,12 @@ enum InlineNode: Hashable, Sendable {
   case strikethrough(children: [InlineNode])
   case link(destination: String, children: [InlineNode])
   case image(source: String, children: [InlineNode])
+  case latex(rawContent: String,[LatexNode]) // 新增 LaTeX 节点，包含公式内容和块类型
+}
+
+indirect enum LatexNode: Hashable, Sendable {
+    case text(String)
+    case latex(content: String, isBlock: Bool)
 }
 
 extension InlineNode {

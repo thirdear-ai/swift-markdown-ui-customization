@@ -15,7 +15,8 @@ public struct LatexParser {
 extension LatexParser {
     
     func isBlock(parser: LatexParser, text: String) -> Bool {
-        return self.range.lowerBound == text.startIndex && parser.range.upperBound == text.endIndex
+        let bool = self.range.lowerBound == text.startIndex && parser.range.upperBound == text.endIndex
+        return bool || text.count > 20
     }
     
     func pairing(parser: LatexParser) -> Bool {

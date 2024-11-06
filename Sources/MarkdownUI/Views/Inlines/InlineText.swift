@@ -32,7 +32,9 @@ struct InlineText: View {
     }
     
     var body: some View {
-        ForEach(separateLatexFormulaBlock, id: \.self) { nodeType in
+        let items = separateLatexFormulaBlock
+        ForEach(0..<items.count, id: \.self) { index in
+            let nodeType = items[index]
             switch nodeType {
             case .latexBlock(let content):
                 LatexView(content: content)

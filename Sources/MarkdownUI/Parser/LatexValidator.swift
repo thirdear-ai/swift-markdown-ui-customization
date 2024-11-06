@@ -15,7 +15,7 @@ class LatexValidator {
         "\\pi", "\\sigma", "\\omega", "\\infty", "\\partial",
         "\\left", "\\right", "\\begin", "\\end", "\\text",
         "\\mathbf", "\\mathrm", "\\times", "\\div", "\\pm",
-        "\\leq", "\\geq", "\\neq", "\\approx", "\\cdot"
+        "\\leq", "\\geq", "\\neq", "\\approx", "\\cdot", "\\boxed", "\\dfrac"
     ]
     
     // 数学公式中允许的特殊字符

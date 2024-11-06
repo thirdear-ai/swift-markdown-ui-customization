@@ -68,7 +68,7 @@ extension BlockNode {
         case .codeBlock:
             var literal = unsafeNode.literal ?? ""
             literal = LatexParser.removeNewLinePlaceholder(text: literal)
-            self = .codeBlock(fenceInfo: unsafeNode.fenceInfo, content: literal)
+            self = .codeBlock(fenceInfo:  unsafeNode.fenceInfo, content: literal)
         case .htmlBlock:
             var literal = unsafeNode.literal ?? ""
             literal = LatexParser.removeNewLinePlaceholder(text: literal)

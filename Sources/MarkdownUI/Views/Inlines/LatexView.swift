@@ -43,11 +43,16 @@ struct LatexView: View {
     }
     
     func readImage(content: String) async {
-        guard cacheImage == nil else { return }
+        guard cacheImage == nil else {
+            if cacheImage != image {
+                image = cacheImage
+            }
+            return
+        }
         if SVGCache.shared.canKey(key: content) {
             do {
                 let image = try await LatexRenderer.image(with: content, fontSize: fontSize)
-                if self.content == content {
+                if content == self.content {
                     self.image = image
                 }
             } catch let error {

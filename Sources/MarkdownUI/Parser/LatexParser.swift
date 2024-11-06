@@ -16,7 +16,7 @@ extension LatexParser {
     
     func isBlock(parser: LatexParser, text: String) -> Bool {
         let bool = self.range.lowerBound == text.startIndex && parser.range.upperBound == text.endIndex
-        return bool || text.count > 20
+        return bool || text.count > 40
     }
     
     func pairing(parser: LatexParser) -> Bool {
@@ -143,7 +143,6 @@ extension LatexParser {
                             if valid == false {
                                 debugPrint("valid=\(latex)")
                             }
-                             
                             break
                         }
                     }

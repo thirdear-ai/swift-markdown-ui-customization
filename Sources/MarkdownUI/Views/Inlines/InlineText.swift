@@ -159,8 +159,16 @@ extension InlineText {
                     }
                 }
             } else {
-                items.append(inlineNode)
-            }
+                if case .lineBreak = inlineNode {
+                    if items.isEmpty == false {
+                        alls.append(.other(items))
+                        items.removeAll()
+                    }
+                    alls.append(.other([inlineNode]))
+                } else {
+                    items.append(inlineNode)
+                }
+             }
         }
         if items.isEmpty == false {
             alls.append(.other(items))

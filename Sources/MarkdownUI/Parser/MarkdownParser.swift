@@ -168,7 +168,14 @@ extension InlineNode {
                 children: unsafeNode.children.compactMap(InlineNode.init(unsafeNode:))
             )
         default:
-            assertionFailure("Unhandled node type '\(unsafeNode.nodeType)' in InlineNode.")
+            if unsafeNode.nodeType == .inlineAttributes {
+                let text = String(cString: cmark_render_commonmark(unsafeNode, CMARK_OPT_DEFAULT, 0))
+                self = .text(text)
+            } else {
+                assertionFailure("Unhandled node type '\(unsafeNode.nodeType)' in InlineNode.")
+                let text = String(cString: cmark_render_commonmark(unsafeNode, CMARK_OPT_DEFAULT, 0))
+                self = .text(text)
+            }
             return nil
         }
     }

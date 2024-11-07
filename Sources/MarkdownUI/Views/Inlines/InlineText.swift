@@ -159,7 +159,7 @@ extension InlineText {
                     }
                 }
             } else {
-                if case .lineBreak = inlineNode {
+                if case .softBreak = inlineNode, self.softBreakMode == .lineBreak {
                     if items.isEmpty == false {
                         alls.append(.other(items))
                         items.removeAll()

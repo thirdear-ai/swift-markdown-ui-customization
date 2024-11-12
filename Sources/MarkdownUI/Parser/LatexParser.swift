@@ -43,6 +43,8 @@ extension LatexParser {
     
     static let escapePlaceholder = "¤¶"
     
+    static let caretSymbolPlaceholder = "¤¶."
+    
     static let latexSpecialCharacters: CharacterSet = {
         return CharacterSet(charactersIn: "{}[]+-*=<>∈∉∋∌∏∑−∓∔∕∗√∝∞∧∨∩∪∫∬∭∮∯∰∱∲∳ℵℏℑℜ℘ℓ∂∇")
     }()
@@ -161,6 +163,7 @@ extension LatexParser {
                 let newLatex = String(latex)
                     .replacingOccurrences(of: "\n", with: newLinePlaceholder)
                     .replacingOccurrences(of: "\\", with: escapePlaceholder)
+                    .replacingOccurrences(of: "*", with: caretSymbolPlaceholder)
                 text.replaceSubrange(latexRange, with: newLatex)
                 if head.tag != "$$" {
                     text.replaceSubrange(head.range, with: "$$")
@@ -176,5 +179,6 @@ extension LatexParser {
         text
             .replacingOccurrences(of: newLinePlaceholder, with: "\n")
             .replacingOccurrences(of: escapePlaceholder, with: "\\")
+            .replacingOccurrences(of: caretSymbolPlaceholder, with: "*")
     }
 }

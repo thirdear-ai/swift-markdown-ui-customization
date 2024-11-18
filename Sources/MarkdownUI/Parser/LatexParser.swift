@@ -39,12 +39,6 @@ extension LatexParser {
 
 extension LatexParser {
     
-    static let newLinePlaceholder = "¤n¶"
-    
-    static let escapePlaceholder = "¤¶"
-    
-    static let caretSymbolPlaceholder = "¤¶."
-    
     static let latexSpecialCharacters: CharacterSet = {
         return CharacterSet(charactersIn: "{}[]+-*=<>∈∉∋∌∏∑−∓∔∕∗√∝∞∧∨∩∪∫∬∭∮∯∰∱∲∳ℵℏℑℜ℘ℓ∂∇")
     }()
@@ -160,10 +154,10 @@ extension LatexParser {
                 if head.tag != "$$" {
                     text.replaceSubrange(last.range, with: "$$")
                 }
-                let newLatex = String(latex)
-                    .replacingOccurrences(of: "\n", with: newLinePlaceholder)
-                    .replacingOccurrences(of: "\\", with: escapePlaceholder)
-                    .replacingOccurrences(of: "*", with: caretSymbolPlaceholder)
+                var newLatex = String(latex)
+                if let value = newLatex.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                    newLatex = value
+                }
                 text.replaceSubrange(latexRange, with: newLatex)
                 if head.tag != "$$" {
                     text.replaceSubrange(head.range, with: "$$")
@@ -176,9 +170,6 @@ extension LatexParser {
     }
 
     public static func removeNewLinePlaceholder(text: String) -> String {
-        text
-            .replacingOccurrences(of: newLinePlaceholder, with: "\n")
-            .replacingOccurrences(of: escapePlaceholder, with: "\\")
-            .replacingOccurrences(of: caretSymbolPlaceholder, with: "*")
+        text.removingPercentEncoding ?? text
     }
 }

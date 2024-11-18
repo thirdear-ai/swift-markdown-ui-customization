@@ -32,7 +32,7 @@ struct InlineText: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             let items = separateLatexFormulaBlock
             ForEach(0..<items.count, id: \.self) { index in
                 let nodeType = items[index]

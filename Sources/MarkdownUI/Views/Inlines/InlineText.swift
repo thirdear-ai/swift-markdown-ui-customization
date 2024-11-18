@@ -193,6 +193,21 @@ extension InlineText {
                         }
                     }
                 }
+            case .strong(let children):
+                let nodes = InlineText.loadImages(inlines: children)
+                if nodes.isEmpty == false {
+                    loadImages.append(contentsOf: nodes)
+                }
+            case .strikethrough(let children):
+                let nodes = InlineText.loadImages(inlines: children)
+                if nodes.isEmpty == false {
+                    loadImages.append(contentsOf: nodes)
+                }
+            case .emphasis(let children):
+                let nodes = InlineText.loadImages(inlines: children)
+                if nodes.isEmpty == false {
+                    loadImages.append(contentsOf: nodes)
+                }
             default: break
             }
         }

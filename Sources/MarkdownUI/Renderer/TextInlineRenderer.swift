@@ -74,6 +74,25 @@ private struct TextInlineRenderer {
                     self.renderLatex(content)
                 }
             }
+        case .strong(let nodes), .emphasis(let nodes), .strikethrough(let nodes):
+            let isContains = nodes.contains { node in
+                switch node {
+                case .latex: return true
+                default: return false
+                }
+            }
+            if isContains {
+                nodes.forEach { node in
+                    switch node {
+                    case .latex:
+                        render(node)
+                    default:
+                        self.defaultRender(node)
+                    }
+                }
+            } else {
+                self.defaultRender(inline)
+            }
         default:
             self.defaultRender(inline)
         }

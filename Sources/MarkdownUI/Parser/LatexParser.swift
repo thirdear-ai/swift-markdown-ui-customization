@@ -155,7 +155,7 @@ extension LatexParser {
                     text.replaceSubrange(last.range, with: "$$")
                 }
                 var newLatex = String(latex)
-                if let value = newLatex.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                if let value = newLatex.data(using: .utf8)?.base64EncodedString() {
                     newLatex = value
                 }
                 text.replaceSubrange(latexRange, with: newLatex)
@@ -168,8 +168,12 @@ extension LatexParser {
             return text
         }
     }
-
+    
     public static func removeNewLinePlaceholder(text: String) -> String {
-        text.removingPercentEncoding ?? text
+        if let data = Data(base64Encoded: text) {
+            return String(data: data, encoding: .utf8) ?? text
+        } else {
+            return text
+        }
     }
 }

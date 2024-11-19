@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-struct LatexView: View {
+struct LatexView: View, Equatable {
+    static func == (lhs: LatexView, rhs: LatexView) -> Bool {
+        lhs.content == rhs.content
+    }
+    
     @Environment(\.theme) private var theme
     @Environment(\.textStyle) private var textStyle
     @State var image: UIImage?

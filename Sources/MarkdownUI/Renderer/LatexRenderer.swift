@@ -37,6 +37,8 @@ struct LatexRenderer {
         let packages = TeXInputProcessorOptions.Packages.all
         return TeXInputProcessorOptions(loadPackages: packages)
     }()
+    
+    @ReadWriteLock
     private static var rendererTask: [String: Task<UIImage, Error>] = [:]
 }
 

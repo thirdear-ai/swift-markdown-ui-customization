@@ -21,22 +21,14 @@ struct TableCell: View {
     }
     
     var body: some View {
-        HStack {
-            if row == 0 {
-                Spacer()
-            }
-            self.tableCell.makeBody(
-                configuration: .init(
-                    row: self.row,
-                    column: self.column,
-                    label: .init(self.label),
-                    content: .init(block: .paragraph(content: cell.content))
-                )
+        self.tableCell.makeBody(
+            configuration: .init(
+                row: self.row,
+                column: self.column,
+                label: .init(self.label),
+                content: .init(block: .paragraph(content: cell.content))
             )
-            if row == 0 {
-                Spacer()
-            }
-        }
+        )
         .tableCellBounds(forRow: self.row, column: self.column)
     }
     

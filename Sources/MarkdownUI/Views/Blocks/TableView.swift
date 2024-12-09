@@ -27,11 +27,9 @@ struct TableView: View {
       ForEach(0..<self.rowCount, id: \.self) { row in
         GridRow {
           ForEach(0..<self.columnCount, id: \.self) { column in
-              Spacer()
             TableCell(row: row, column: column, cell: self.rows[row].cells[column])
               .gridColumnAlignment(.init(self.columnAlignments[column]))
           }
-            Spacer()
         }
       }
     }

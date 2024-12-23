@@ -66,11 +66,11 @@ Content: View
     }
 }
 
-extension BlockSequence where Data == [BlockNode], Content == BlockNode {
-    init(_ blocks: [BlockNode]) {
-        self.init(blocks) { $1 }
-    }
-}
+// extension BlockSequence where Data == [BlockNode], Content == BlockNode {
+//     init(_ blocks: [BlockNode]) {
+//         self.init(blocks) { $1 }
+//     }
+// }
 
 extension TextAlignment {
     var alignment: Alignment {

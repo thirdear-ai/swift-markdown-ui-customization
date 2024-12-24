@@ -8,30 +8,30 @@
 import Foundation
 
 @propertyWrapper
-class ReadWriteLock<T> {
+public class ReadWriteLock<T> {
     private var _wrappedValue: T
     private let lock = NSRecursiveLock()
     
-    var wrappedValue: T {
+    public var wrappedValue: T {
         get { self.read { $0 } }
         set { self.update { $0 = newValue } }
     }
     
-    var projectedValue: ReadWriteLock<T> { self }
+    public var projectedValue: ReadWriteLock<T> { self }
     
-    init(wrappedValue: T) {
+    public init(wrappedValue: T) {
         self._wrappedValue = wrappedValue
     }
     
     @discardableResult
-    final func read<U>(_ block: (T) throws -> U) rethrows -> U {
+    final public func read<U>(_ block: (T) throws -> U) rethrows -> U {
         self.lock.lock()
         defer { self.lock.unlock() }
         return try block(self._wrappedValue)
     }
     
     @discardableResult
-    final func update<U>(_ block: (inout T) throws -> U) rethrows -> U {
+    final public func update<U>(_ block: (inout T) throws -> U) rethrows -> U {
         self.lock.lock()
         defer { self.lock.unlock() }
         return try block(&self._wrappedValue)
@@ -39,7 +39,7 @@ class ReadWriteLock<T> {
 }
 
 // MARK: - Numeric
-extension ReadWriteLock where T: Numeric {
+public extension ReadWriteLock where T: Numeric {
     @discardableResult
     final func increment() -> T {
         self.update { n in
@@ -58,7 +58,7 @@ extension ReadWriteLock where T: Numeric {
 }
 
 // MARK: - Dictionary
-extension ReadWriteLock where T == Dictionary<String, Any> {
+public extension ReadWriteLock where T == Dictionary<String, Any> {
     @discardableResult
     final func safeValue<S>(for key: String, block: () -> S) -> S {
         self.lock.lock()

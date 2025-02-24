@@ -53,7 +53,8 @@ struct InlineText: View {
                             images: self.inlineImages,
                             latexImages: self.latexImages,
                             softBreakMode: self.softBreakMode,
-                            attributes: attributes
+                            attributes: attributes,
+                            linkTextBuilder: self.theme.siderLinkTextBuilder
                         )
                     }
                 }

@@ -4,8 +4,8 @@ import Foundation
 
 extension Array where Element == BlockNode {
     init(markdown: String) {
-        let newMarkdown = LatexParser.preprocess(in: markdown)
-        let blocks = UnsafeNode.parseMarkdown(newMarkdown) { document in
+        let siderMarkdown = SiderMarkdown.preprocessMarkdown(markdown)
+        let blocks = UnsafeNode.parseMarkdown(siderMarkdown) { document in
             document.children.compactMap(BlockNode.init(unsafeNode:))
         }
         self.init(blocks ?? .init())

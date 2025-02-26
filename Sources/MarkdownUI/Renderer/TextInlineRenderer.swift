@@ -1,5 +1,7 @@
 import SwiftUI
 
+typealias LinkTextBuilder = Theme.SiderLinkTextBuilder
+
 extension Sequence where Element == InlineNode {
     func renderText(
         baseURL: URL?,
@@ -7,7 +9,8 @@ extension Sequence where Element == InlineNode {
         images: [String: Image],
         latexImages: [String: (Image, CGSize)],
         softBreakMode: SoftBreak.Mode,
-        attributes: AttributeContainer
+        attributes: AttributeContainer,
+        linkTextBuilder: LinkTextBuilder?
     ) -> Text {
         var renderer = TextInlineRenderer(
             baseURL: baseURL,
@@ -15,7 +18,8 @@ extension Sequence where Element == InlineNode {
             images: images,
             latexImages: latexImages,
             softBreakMode: softBreakMode,
-            attributes: attributes
+            attributes: attributes,
+            linkTextBuilder: linkTextBuilder
         )
         renderer.render(self)
         return renderer.result
@@ -31,7 +35,10 @@ private struct TextInlineRenderer {
     private let latexImages: [String: (Image, CGSize)]
     private let softBreakMode: SoftBreak.Mode
     private let attributes: AttributeContainer
+    private let linkTextBuilder: LinkTextBuilder?
+    
     private var shouldSkipNextWhitespace = false
+    
     
     init(
         baseURL: URL?,
@@ -39,7 +46,8 @@ private struct TextInlineRenderer {
         images: [String: Image],
         latexImages: [String: (Image, CGSize)],
         softBreakMode: SoftBreak.Mode,
-        attributes: AttributeContainer
+        attributes: AttributeContainer,
+        linkTextBuilder: LinkTextBuilder?
     ) {
         self.baseURL = baseURL
         self.textStyles = textStyles
@@ -47,6 +55,7 @@ private struct TextInlineRenderer {
         self.softBreakMode = softBreakMode
         self.attributes = attributes
         self.latexImages = latexImages
+        self.linkTextBuilder = linkTextBuilder
     }
     
     mutating func render<S: Sequence>(_ inlines: S) where S.Element == InlineNode {
@@ -93,6 +102,8 @@ private struct TextInlineRenderer {
             } else {
                 self.defaultRender(inline)
             }
+        case .link(let destination, let children):
+            self.renderLinkText(inline, destination: destination, children: children)
         default:
             self.defaultRender(inline)
         }
@@ -150,6 +161,25 @@ private struct TextInlineRenderer {
     private mutating func renderImage(_ source: String) {
         if let image = self.images[source] {
             self.result = self.result + Text(image)
+        }
+    }
+    
+    private mutating func renderLinkText(_ inline: InlineNode, destination: String, children: [InlineNode]) {
+        guard let linkTextBuilder = linkTextBuilder else {
+            self.defaultRender(inline)
+            return
+        }
+        let childrenText: [String] = children.compactMap {
+            guard case .text(let string) = $0 else {
+                return nil
+            }
+            return string
+        }
+        if let text = childrenText.first,
+           let linkText = linkTextBuilder(text, destination) {
+            self.result = self.result + linkText
+        } else {
+            self.defaultRender(inline)
         }
     }
     

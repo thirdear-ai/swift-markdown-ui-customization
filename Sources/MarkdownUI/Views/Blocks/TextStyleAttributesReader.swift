@@ -10,7 +10,7 @@ struct TextStyleAttributesReader<Content: View>: View {
   }
 
   var body: some View {
-    self.content(self.attributes)
+    self.content(self.attributes).fixedSize(horizontal: false, vertical: true)
   }
 
   private var attributes: AttributeContainer {

@@ -6,17 +6,20 @@ struct ListItemView: View {
 
   private let item: RawListItem
   private let number: Int
+    private let total: Int
   private let markerStyle: BlockStyle<ListMarkerConfiguration>
   private let markerWidth: CGFloat?
 
   init(
     item: RawListItem,
     number: Int,
+    total: Int,
     markerStyle: BlockStyle<ListMarkerConfiguration>,
     markerWidth: CGFloat?
   ) {
     self.item = item
     self.number = number
+      self.total = total
     self.markerStyle = markerStyle
     self.markerWidth = markerWidth
   }
@@ -25,6 +28,9 @@ struct ListItemView: View {
     self.listItem.makeBody(
       configuration: .init(
         label: .init(self.label),
+        index: self.number,
+        total: self.total,
+        level: self.listLevel,
         content: .init(blocks: item.children)
       )
     )

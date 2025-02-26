@@ -17,6 +17,12 @@ public struct BlockConfiguration {
 
   /// The Markdown block view.
   public let label: Label
+    // 列表中第几个
+    public var index: Int = 0
+    // 列表中总个数
+    public var total: Int = 0
+    // 当前列表的层级
+    public var level: Int = 0
 
   /// The content of the Markdown block.
   ///

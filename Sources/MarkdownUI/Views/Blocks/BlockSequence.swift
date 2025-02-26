@@ -44,7 +44,7 @@ Content: View
                         .onPreferenceChange(BlockMarginsPreference.self) { value in
                             self.blockMargins[element.hashValue] = value
                         }
-                        .padding(.top, self.topPaddingLength(for: element))
+                        .padding(.top, self.topPaddingLength(for: element) ?? 0)
                 })
             }
         }

@@ -53,7 +53,7 @@ struct BlockListView: View {
                     .onPreferenceChange(BlockMarginsPreference.self) { value in
                         self.blockMargins[nodeModel.hashValue] = value
                     }
-                    .padding(.top, self.topPaddingLength(for: nodeModel))
+                    .padding(.top, self.topPaddingLength(for: nodeModel) ?? 16)
             }
         }
     }

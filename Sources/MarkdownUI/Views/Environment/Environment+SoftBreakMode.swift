@@ -21,3 +21,20 @@ extension EnvironmentValues {
 private struct SoftBreakModeKey: EnvironmentKey {
   static let defaultValue: SoftBreak.Mode = .space
 }
+
+extension View {
+    public func markdownParagraphLineSpacing(_ spacing: CGFloat) -> some View {
+    self.environment(\.paragraphLineSpacing, spacing)
+  }
+}
+
+extension EnvironmentValues {
+    var paragraphLineSpacing: CGFloat {
+    get { self[ParagraphLineSpacingKey.self] }
+    set { self[ParagraphLineSpacingKey.self] = newValue }
+  }
+}
+
+private struct ParagraphLineSpacingKey: EnvironmentKey {
+    static let defaultValue: CGFloat = 0.0
+}

@@ -17,6 +17,7 @@ struct InlineText: View {
     @Environment(\.baseURL) private var baseURL
     @Environment(\.imageBaseURL) private var imageBaseURL
     @Environment(\.softBreakMode) private var softBreakMode
+    @Environment(\.paragraphLineSpacing) private var paragraphLineSpacing
     @Environment(\.theme) private var theme
     @Environment(\.textStyle) private var textStyle
 
@@ -32,7 +33,7 @@ struct InlineText: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: paragraphLineSpacing) {
             let items = separateLatexFormulaBlock
             ForEach(0..<items.count, id: \.self) { index in
                 let nodeType = items[index]
@@ -57,6 +58,7 @@ struct InlineText: View {
                             linkTextBuilder: self.theme.siderLinkTextBuilder
                         )
                     }
+                    .lineSpacing(paragraphLineSpacing)
                 }
             }
         }
@@ -165,7 +167,7 @@ extension InlineText {
                         alls.append(.other(items))
                         items.removeAll()
                     }
-                    alls.append(.other([inlineNode]))
+//                    alls.append(.other([inlineNode]))
                 } else {
                     items.append(inlineNode)
                 }

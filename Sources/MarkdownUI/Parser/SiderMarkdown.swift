@@ -8,7 +8,9 @@
 import Foundation
 
 public enum SiderMarkdown {
-    public static let siderLinkPrefix = "sider_"
+    public static let siderLinkPrefix = "@_"
+    
+    public static let siderSerialPrefix = "&_"
     
     public static let referenceScheme = "reference"
 }
@@ -42,6 +44,6 @@ extension SiderMarkdown {
             return
         }
         let range = NSRange(markdown.startIndex..<markdown.endIndex, in: markdown)
-        markdown = regex.stringByReplacingMatches(in: markdown, range: range, withTemplate: "[$1$2](\(referenceScheme)://$1$2)")
+        markdown = regex.stringByReplacingMatches(in: markdown, range: range, withTemplate: "[\(siderSerialPrefix)$1$2](\(referenceScheme)://$1$2)")
     }
 }

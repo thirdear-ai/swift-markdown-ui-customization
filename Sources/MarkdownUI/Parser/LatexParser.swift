@@ -110,38 +110,35 @@ extension LatexParser {
         var nextRange: Range<String.Index>?
         var parsers: [(LatexParser, LatexParser)] = []
         for (index, range) in ranges.enumerated() {
-            var skip = false
             // 如果当前范围属于被包含在一个公式中就跳过
             if let nextRange = nextRange, nextRange.upperBound > range.lowerBound {
-                skip = true
+                continue
             }
-            if skip == false {
-                let tag = text[range]
-                let item = LatexParser(range: range, tag: tag)
-                if index < ranges.count {
-                    // 寻找下一个匹配的标记
-                    for laterIndex in (index+1)..<ranges.count {
-                        let laterRange = ranges[laterIndex]
-                        let tag = text[laterRange]
-                        let later = LatexParser(range: laterRange, tag: tag)
-                        if item.pairing(parser: later) {
-                            let latexRange = item.range.upperBound..<later.range.lowerBound
-                            let latex = text[latexRange]
-                            var valid = true
-                            if item.tag == "$" {
-                                valid = LatexValidator.isMathFormula(String(latex))
-                            }
-                            if valid {
-                                parsers.append((item, later))
-                                nextRange = later.range
-                            } else {
-                                nextRange = item.range
-                            }
-                            if valid == false {
-                                debugPrint("valid=\(latex)")
-                            }
-                            break
+            let tag = text[range]
+            let item = LatexParser(range: range, tag: tag)
+            if index < ranges.count {
+                // 寻找下一个匹配的标记
+                for laterIndex in (index+1)..<ranges.count {
+                    let laterRange = ranges[laterIndex]
+                    let tag = text[laterRange]
+                    let later = LatexParser(range: laterRange, tag: tag)
+                    if item.pairing(parser: later) {
+                        let latexRange = item.range.upperBound..<later.range.lowerBound
+                        let latex = text[latexRange]
+                        var valid = true
+                        if item.tag == "$" {
+                            valid = LatexValidator.isMathFormula(String(latex))
                         }
+                        if valid {
+                            parsers.append((item, later))
+                            nextRange = later.range
+                        } else {
+                            nextRange = item.range
+                        }
+                        if valid == false {
+                            debugPrint("valid=\(latex)")
+                        }
+                        break
                     }
                 }
             }

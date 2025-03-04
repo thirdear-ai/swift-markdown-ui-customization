@@ -30,12 +30,19 @@ class LatexValidator {
     static func isMathFormula(_ text: String) -> Bool {
         // 去掉首尾的 $ 符号
         let formula = text.trimmingCharacters(in: CharacterSet(charactersIn: "$"))
-        
-        // 如果字符串全是数字和普通文本，不是数学公式
-        let hasOnlyNumbersAndText = formula.allSatisfy { char in
-            char.isNumber || char.isLetter || char == " " || char == "," || char == "." || char == "。" || char == "，"
+        let maxVariableLength = 10
+        // 仅用公式包裹一个变量的情况
+        if formula.count < maxVariableLength, formula.allSatisfy({
+            $0.isLetter || $0.isNumber
+        }) {
+            return true
         }
-        if hasOnlyNumbersAndText {
+        
+        // 如果字符串全是数字，不是数学公式
+        let isOnlyNumber = formula.allSatisfy { char in
+            char.isNumber || char == " " || char == "," || char == "." || char == "。" || char == "，"
+        }
+        if isOnlyNumber {
             return false
         }
         
@@ -73,7 +80,7 @@ class LatexValidator {
                 currentVariable.append(char)
             } else {
                 // 检查变量长度
-                if currentVariable.count > 7 {
+                if currentVariable.count > maxVariableLength {
                     return false
                 }
                 currentVariable = ""
@@ -87,7 +94,7 @@ class LatexValidator {
         }
         
         // 检查最后一个变量的长度
-        if currentVariable.count > 7 {
+        if currentVariable.count > maxVariableLength {
             return false
         }
         

@@ -13,6 +13,7 @@ public enum SiderMarkdown {
     public static let siderSerialPrefix = "&_"
     
     public static let referenceScheme = "reference"
+    public static let relatedScheme = "related"
 }
 
 extension SiderMarkdown {

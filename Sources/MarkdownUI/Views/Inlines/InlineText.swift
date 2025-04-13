@@ -40,7 +40,7 @@ struct InlineText: View {
                 switch nodeType {
                 case .latexBlock(let content):
                     LatexView(content: content)
-                case .other(let inlines):
+                case .other(let inlines): 
                     TextStyleAttributesReader { attributes in
                         inlines.renderText(
                             baseURL: self.baseURL,

@@ -51,14 +51,21 @@ extension LatexParser {
         return string.rangeOfCharacter(from: latexSpecialCharacters) != nil
     }
     
+    static var findLatexRegular: NSRegularExpression?
+    static var findSpecialCharacter: NSRegularExpression?
     // 定义一个函数来查找特殊字符的范围
     static func findLatexRanges(in text: String) -> [Range<String.Index>] {
         do {
-            // 使用原始字符串定义正则表达式模式
-            let pattern = #"\$\$"#
             
-            // 编译正则表达式
-            let regex = try NSRegularExpression(pattern: pattern)
+            if findLatexRegular == nil {
+                // 使用原始字符串定义正则表达式模式
+                let pattern = #"\$\$"#
+                // 编译正则表达式
+                findLatexRegular = try NSRegularExpression(pattern: pattern)
+            }
+            
+            guard let regex = findLatexRegular else { return [] }
+           
             
             // 将整个字符串的范围转换为 NSRange
             let nsRange = NSRange(text.startIndex..<text.endIndex, in: text)
@@ -80,11 +87,13 @@ extension LatexParser {
     // 定义一个函数来查找特殊字符的范围
     static func findSpecialCharacterRanges(in text: String) -> [Range<String.Index>] {
         do {
-            // 使用原始字符串定义正则表达式模式
-            let pattern = #"\$\$|\$|\\\(|\\\)|\\\[|\\\]"#
-            
-            // 编译正则表达式
-            let regex = try NSRegularExpression(pattern: pattern)
+            if findSpecialCharacter == nil {
+                // 使用原始字符串定义正则表达式模式
+                let pattern = #"\$\$|\$|\\\(|\\\)|\\\[|\\\]"#
+                // 编译正则表达式
+                findSpecialCharacter = try NSRegularExpression(pattern: pattern)
+            }
+            guard let regex = findSpecialCharacter else { return [] }
             
             // 将整个字符串的范围转换为 NSRange
             let nsRange = NSRange(text.startIndex..<text.endIndex, in: text)

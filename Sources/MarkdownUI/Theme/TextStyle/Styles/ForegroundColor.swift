@@ -11,6 +11,8 @@ public struct ForegroundColor: TextStyle {
   }
 
   public func _collectAttributes(in attributes: inout AttributeContainer) {
-    attributes.foregroundColor = self.foregroundColor
+      if self.foregroundColor != attributes.foregroundColor {
+          attributes.foregroundColor = self.foregroundColor
+      }
   }
 }

@@ -26,16 +26,20 @@ extension SiderMarkdown {
         return result
     }
     
-    private static var replaceSerialLinkRegular: NSRegularExpression?
-    private static var replaceSerialNumberToLinkRegular: NSRegularExpression?
+    private static let replaceSerialLinkRegular: NSRegularExpression? = {
+        let options: NSRegularExpression.Options = [.caseInsensitive]
+        let pattern = #"(?:(?:【\^|【C_|\^【)(\d{1,2})】|(?:\[\^|\[C_|\^\[)(\d{1,2})\])(?=\(.+\:\/\/.+)"#
+        return try? NSRegularExpression(pattern: pattern, options: options)
+    }()
+    
+    private static var replaceSerialNumberToLinkRegular: NSRegularExpression? = {
+        let options: NSRegularExpression.Options = [.caseInsensitive]
+        let pattern = #"(?:【\^|【C_|\^【)(\d+)】|(?:\[\^|\[C_|\^\[)(\d+)\]|\[(\^\d+(?:,\^\d+)*)\]|\[ref:(\s?\d+(?:,\s?\d+)*)\]"#
+        return try? NSRegularExpression(pattern: pattern, options: options)
+    }()
 
     
     private static func replaceSerialLink(_ markdown: inout String) {
-        if replaceSerialLinkRegular == nil {
-            let options: NSRegularExpression.Options = [.caseInsensitive]
-            let pattern = #"(?:(?:【\^|【C_|\^【)(\d{1,2})】|(?:\[\^|\[C_|\^\[)(\d{1,2})\])(?=\(.+\:\/\/.+)"#
-            replaceSerialLinkRegular = try? NSRegularExpression(pattern: pattern, options: options)
-        }
         guard let regex = replaceSerialLinkRegular else {
             assertionFailure("正则表达式不正确")
             return
@@ -45,11 +49,6 @@ extension SiderMarkdown {
     }
     
     private static func replaceSerialNumberToLink(_ markdown: inout String) {
-        if replaceSerialNumberToLinkRegular == nil {
-            let options: NSRegularExpression.Options = [.caseInsensitive]
-            let pattern = #"(?:【\^|【C_|\^【)(\d+)】|(?:\[\^|\[C_|\^\[)(\d+)\]|\[(\^\d+(?:,\^\d+)*)\]|\[ref:(\d+(?:,\d+)*)\]"#
-            replaceSerialNumberToLinkRegular = try? NSRegularExpression(pattern: pattern, options: options)
-        }
         guard let regex = replaceSerialNumberToLinkRegular else {
             assertionFailure("正则表达式不正确")
             return

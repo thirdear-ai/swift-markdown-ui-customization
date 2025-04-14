@@ -176,7 +176,7 @@ private struct TextInlineRenderer {
             return string
         }
         if let text = childrenText.first,
-           let linkText = linkTextBuilder(text, destination) {
+           let linkText = linkTextBuilder(text, destination, attributes.fontProperties) {
             self.result = self.result + linkText
         } else {
             self.defaultRender(inline)

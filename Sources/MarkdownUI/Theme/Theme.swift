@@ -119,7 +119,7 @@ public struct Theme: Sendable {
     public var link: TextStyle = EmptyTextStyle()
     
     /// SiderLinkTextBuilder
-    public typealias SiderLinkTextBuilder = (_ text: String, _ destination: String) -> Text?
+    public typealias SiderLinkTextBuilder = (_ text: String, _ destination: String, _ fontProperties: FontProperties?) -> Text?
     
     public var siderLinkTextBuilder: SiderLinkTextBuilder?
     

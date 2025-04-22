@@ -54,6 +54,6 @@ extension SiderMarkdown {
             return
         }
         let range = NSRange(markdown.startIndex..<markdown.endIndex, in: markdown)
-        markdown = regex.stringByReplacingMatches(in: markdown, range: range, withTemplate: "[\(siderSerialPrefix)$1$2$3$4](\(referenceScheme)://$1$2$3$4)")
+        markdown = regex.stringByReplacingMatches(in: markdown, range: range, withTemplate: "[\(siderSerialPrefix)$1$2$3$4](\(referenceScheme)://serial)")
     }
 }

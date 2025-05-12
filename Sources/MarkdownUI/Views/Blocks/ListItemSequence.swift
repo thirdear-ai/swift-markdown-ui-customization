@@ -23,7 +23,7 @@ struct ListItemSequence: View {
       ListItemView(
         item: item,
         number: self.start + index,
-        total: self.items.count,
+//        total: self.items.count, // Commit c60ee69 - removed
         markerStyle: self.markerStyle,
         markerWidth: self.markerWidth
       )

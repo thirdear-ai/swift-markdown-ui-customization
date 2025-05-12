@@ -17,7 +17,7 @@ struct BulletedListView: View {
     self.list.makeBody(
       configuration: .init(
         label: .init(self.label),
-        level: self.listLevel + 1,
+//        level: self.listLevel + 1,  // Commit c60ee69 - removed
         content: .init(block: .bulletedList(isTight: self.isTight, items: self.items))
       )
     )

@@ -44,7 +44,8 @@ Content: View
                         .onPreferenceChange(BlockMarginsPreference.self) { value in
                             self.blockMargins[element.hashValue] = value
                         }
-                        .padding(.top, self.topPaddingLength(for: element) ?? 0)
+                        .padding(.top, self.topPaddingLength(for: element))
+//                        .padding(.top, self.topPaddingLength(for: element) ?? 0) // Commit c60ee69 - removed
                 })
             }
         }
@@ -73,7 +74,7 @@ Content: View
  }
 
 extension TextAlignment {
-    var alignment: Alignment {
+    fileprivate var alignment: Alignment { // Commit 05d31df - removed
         switch self {
         case .leading:
             return .leading

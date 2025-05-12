@@ -211,8 +211,8 @@ public struct Markdown: View {
     
     public var body: some View {
         TextStyleAttributesReader { attributes in
-//            BlockSequence(self.blocks)
-            BlockListView(nodes: self.blocks)
+            BlockSequence(self.blocks)
+//            BlockListView(nodes: self.blocks) // Commit 05d31df - removed
                 .foregroundColor(attributes.foregroundColor)
                 .background(attributes.backgroundColor)
                 .modifier(ScaledFontSizeModifier(attributes.fontProperties?.size))

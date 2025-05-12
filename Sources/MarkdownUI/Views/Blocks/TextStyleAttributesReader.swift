@@ -11,7 +11,7 @@ struct TextStyleAttributesReader<Content: View>: View {
 
   var body: some View {
     self.content(self.attributes)
-          .fixedSize(horizontal: false, vertical: true)
+//          .fixedSize(horizontal: false, vertical: true) // Commit ef2bc27 - removed.
   }
 
   private var attributes: AttributeContainer {

@@ -163,15 +163,17 @@ extension InlineText {
                     }
                 }
             } else {
-                if case .lineBreak = inlineNode {
-                    if items.isEmpty == false {
-                        alls.append(.other(items))
-                        items.removeAll()
-                    }
-                    alls.append(.other([inlineNode])) // Commit e65ee7b - removed
-                } else {
-                    items.append(inlineNode)
-                }
+                items.append(inlineNode)
+                //MARK: Commit 3fb37a5 - removed || abf76fe || 34d0702
+//                if case .lineBreak = inlineNode {
+//                    if items.isEmpty == false {
+//                        alls.append(.other(items))
+//                        items.removeAll()
+//                    }
+//                    alls.append(.other([inlineNode])) // Commit e65ee7b - removed
+//                } else {
+//                    items.append(inlineNode)
+//                }
             }
         }
         if items.isEmpty == false {
